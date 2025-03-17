@@ -14,7 +14,7 @@ pub struct Product {
     pub category: String,
 }
 
-#[derive(Insertable, Deserialize, Serialize)]  // ✅ เพิ่ม `Serialize`
+#[derive(Insertable, Deserialize, Serialize)]  
 #[diesel(table_name = crate::schema::products)]
 pub struct InsertProduct {
     pub name: String,

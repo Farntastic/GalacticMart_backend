@@ -4,8 +4,10 @@ use diesel::r2d2::{ConnectionManager, Pool};
 use crate::models::{InsertProduct, Product};
 use actix_cors::Cors;
 use actix_web::middleware::Logger;
+
 use dotenvy::dotenv;
 use std::env;
+
 use uuid::Uuid;
 
 mod schema;
@@ -26,7 +28,7 @@ async fn get_products(pool: web::Data<DbPool>) -> impl Responder {
     }
 }
 
-// ✅ GET - ดึงสินค้าตาม ID
+
 #[get("/products/{id}")]
 async fn get_product_by_id(pool: web::Data<DbPool>, product_id: web::Path<Uuid>) -> impl Responder {
     use crate::schema::products::dsl::*;
@@ -68,7 +70,7 @@ async fn add_product(pool: web::Data<DbPool>, item: web::Json<InsertProduct>) ->
     }
 }
 
-// ✅ PUT - อัปเดตสินค้า
+
 #[put("/products/{id}")]
 async fn update_product(
     pool: web::Data<DbPool>,
@@ -98,7 +100,7 @@ async fn update_product(
     }
 }
 
-// ✅ DELETE - ลบสินค้า
+
 #[delete("/products/{id}")]
 async fn delete_product(pool: web::Data<DbPool>, product_id: web::Path<Uuid>) -> impl Responder {
     use crate::schema::products::dsl::*;
@@ -132,9 +134,9 @@ async fn main() -> std::io::Result<()> {
             .app_data(web::Data::new(pool.clone()))
             .service(get_products)
             .service(add_product)
-            .service(get_product_by_id) // ✅ เพิ่ม API GET by ID
-            .service(update_product) // ✅ เพิ่ม API PUT
-            .service(delete_product) // ✅ เพิ่ม API DELETE
+            .service(get_product_by_id) 
+            .service(update_product) 
+            .service(delete_product) 
     })
     .bind(("127.0.0.1", 8080))?
     .run()
