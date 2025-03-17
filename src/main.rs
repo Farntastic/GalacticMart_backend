@@ -40,7 +40,7 @@ async fn get_product_by_id(pool: web::Data<DbPool>, product_id: web::Path<Uuid>)
 
     match result {
         Ok(product) => HttpResponse::Ok().json(product),
-        Err(_) => HttpResponse::NotFound().json("❌ ไม่พบสินค้านี้!"),
+        Err(_) => HttpResponse::NotFound().json("❌ No products found!"),
     }
 }
 
@@ -95,8 +95,8 @@ async fn update_product(
         .execute(&mut conn);
 
     match result {
-        Ok(rows) if rows > 0 => HttpResponse::Ok().json("✅ อัปเดตสินค้าเรียบร้อย!"),
-        _ => HttpResponse::NotFound().json("❌ ไม่พบสินค้านี้!"),
+        Ok(rows) if rows > 0 => HttpResponse::Ok().json("✅ Product update complete.!"),
+        _ => HttpResponse::NotFound().json("❌ No products found!"),
     }
 }
 
@@ -112,8 +112,8 @@ async fn delete_product(pool: web::Data<DbPool>, product_id: web::Path<Uuid>) ->
     let result = diesel::delete(products.filter(id.eq(target_id))).execute(&mut conn);
 
     match result {
-        Ok(rows) if rows > 0 => HttpResponse::Ok().json("✅ ลบสินค้าเรียบร้อย!"),
-        _ => HttpResponse::NotFound().json("❌ ไม่พบสินค้านี้!"),
+        Ok(rows) if rows > 0 => HttpResponse::Ok().json("✅ Product has been successfully deleted.!"),
+        _ => HttpResponse::NotFound().json("❌ No products found!"),
     }
 }
 
